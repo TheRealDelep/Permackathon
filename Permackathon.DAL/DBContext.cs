@@ -2,7 +2,7 @@
 
 namespace Permackathon.DAL
 {
-    public class Class1
+    public class DBContext
     {
     }
 }
