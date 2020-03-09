@@ -1,4 +1,4 @@
-﻿namespace Permackathon.DAL
+﻿namespace Permackathon.DAL.Entities
 {
     public class Priority
     {

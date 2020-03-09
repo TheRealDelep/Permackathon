@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Permackathon.DAL
+namespace Permackathon.DAL.Entities
 {
     public class ToDo
     {
@@ -11,15 +11,11 @@ namespace Permackathon.DAL
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
 
-        
         public Member Author { get; set; }
         public Member Responsable { get; set; }
         public Site Site { get; set; }
         public List<Priority> Priorities { get; set; }
         public List<Category> Categories { get; set; }
         public List<State> States { get; set; }
-
-
-
     }
 }
