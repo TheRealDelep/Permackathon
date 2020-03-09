@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Permackathon.DAL
+namespace Permackathon.DAL.Entities
 {
     public class Site
     {
@@ -9,5 +9,4 @@ namespace Permackathon.DAL
         public string Phone { get; set; }
         public List<Location> Locations { get; set; }
     }
-
 }
