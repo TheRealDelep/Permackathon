@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace Permackathon.DAL.Entities
 {
-    public class ToDo
+    public class ToDo : Entity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime DateStart { get; set; }
@@ -14,8 +13,8 @@ namespace Permackathon.DAL.Entities
         public Member Author { get; set; }
         public Member Responsable { get; set; }
         public Site Site { get; set; }
-        public List<Priority> Priorities { get; set; }
+        public Priority Priority { get; set; }
         public List<Category> Categories { get; set; }
-        public List<State> States { get; set; }
+        public State State { get; set; }
     }
 }

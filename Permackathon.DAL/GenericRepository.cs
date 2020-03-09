@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using System.Data;
 
 namespace Permackathon.DAL
 {
@@ -20,8 +21,25 @@ namespace Permackathon.DAL
 
         public virtual IEnumerable<T> GetAll()
         {
-            return dbSet.
-                Include(x => x.GetType().GetProperties().Where(p => p.GetType().IsClass));
+            IEnumerable<PropertyInfo> propertiesToInclude =
+                dbSet
+                .GetType()
+                .GetGenericArguments()
+                .First()
+                .GetProperties()
+                .Where(x => (x.PropertyType.IsClass && x.PropertyType != typeof(string)));
+
+            foreach (PropertyInfo prop in propertiesToInclude)
+            {
+                dbSet.Include(prop.Name);
+            }
+
+            return dbSet;
+        }
+
+        public virtual void Add(T entity)
+        {
+            dbSet.Add(entity);
         }
     }
 }
