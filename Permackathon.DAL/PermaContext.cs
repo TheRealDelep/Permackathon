@@ -24,6 +24,14 @@ namespace Permackathon.DAL
             }
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            if (modelBuilder is null)
+            {
+                throw new ArgumentNullException(nameof(modelBuilder));
+            }
+        }
+
         public DbSet<Member> Members { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<ToDo> ToDos { get; set; }
