@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Permackathon.DAL.Entities;
 using System;
 
 namespace Permackathon.DAL
