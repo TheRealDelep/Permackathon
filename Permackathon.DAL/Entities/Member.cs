@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Permackathon.DAL
+namespace Permackathon.DAL.Entities
 {
     public class Member
     {

@@ -37,7 +37,6 @@ namespace Permackathon.DAL
         public DbSet<Category> Categories { get; set; }
         public DbSet<Site> Sites { get; set; }
         public DbSet<Location> Locations { get; set; }
-        public DbSet<MemberRole> MemberRoles { get; set; }
         public DbSet<Priority> Priorities { get; set; }
         public DbSet<State> States { get; set; }
     }
