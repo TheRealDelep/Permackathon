@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Permackathon.DAL;
 using Permackathon.DAL.Entities;
+using System.Reflection;
 
 namespace Permackathon.UI.Controllers
 {
@@ -24,12 +26,36 @@ namespace Permackathon.UI.Controllers
         }
 
         // GET: api/ToDoes
-        [HttpGet]
-        public ActionResult<IEnumerable<ToDo>> GetToDos()
+        [HttpGet("{args}")]
+        public ActionResult<IEnumerable<ToDo>> GetToDos([FromQuery(Name = "args")]string[] args)
         {
+            List<ToDo> result = toDoRepository.Get().ToList();
+
+            foreach (var item in args)
+            {
+                string[] splitted = item.Split('=', StringSplitOptions.RemoveEmptyEntries);
+                int value = int.Parse(splitted[1].Trim());
+
+                foreach (var todo in toDoRepository.Get())
+                {
+                    var prop = todo.GetType().GetProperty(splitted[0]).GetValue(todo);
+                    if (prop is null)
+                    {
+                        result.Remove(todo);
+                    }
+                    else
+                    {
+                        object propId = prop.GetType().GetProperty("Id").GetValue(prop);
+                        if (!propId.Equals(value))
+                        {
+                            result.Remove(todo);
+                        }
+                    }
+                }
+            }
             //OLD
             //return toDoRepository.Get(null, null, "Categorie,Prioritiy,State,Site,Responsable,Author").ToList();
-            return toDoRepository.Get().ToList();
+            return result;
         }
 
         // GET: api/ToDoes/5
@@ -47,12 +73,12 @@ namespace Permackathon.UI.Controllers
             return toDo;
         }
 
-        // GET: api/ToDoes/SiteId/StatusId
-        [HttpGet("{siteId}/{statusId}")]
-        public ActionResult<IEnumerable<ToDo>> GetBySiteAndStatus(int siteId, int statusId)
-        {
-            return toDoRepository.Get(null, null, "Categorie,Prioritiy,State,Site,Responsable,Author").Where(x => (x.Site.Id == siteId && x.State.Id == statusId)).ToList();
-        }
+        //// GET: api/ToDoes/SiteId/StatusId
+        //[HttpGet("{siteId}/{statusId}")]
+        //public ActionResult<IEnumerable<ToDo>> GetBySiteAndStatus(int siteId, int statusId)
+        //{
+        //    return toDoRepository.Get(null, null, "Categorie,Prioritiy,State,Site,Responsable,Author").Where(x => (x.Site.Id == siteId && x.State.Id == statusId)).ToList();
+        //}
 
         // PUT: api/ToDoes/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
