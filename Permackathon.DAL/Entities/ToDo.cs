@@ -14,8 +14,8 @@ namespace Permackathon.DAL.Entities
         public Member Author { get; set; }
         public Member Responsable { get; set; }
         public Site Site { get; set; }
-        public List<Priority> Priorities { get; set; }
-        public List<Category> Categories { get; set; }
-        public List<State> States { get; set; }
+        public Priority Prioritiy { get; set; }
+        public Category Categorie { get; set; }
+        public State State { get; set; }
     }
 }
