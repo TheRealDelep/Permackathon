@@ -15,26 +15,26 @@ namespace Permackathon.UI.Controllers
     public class LocationsController : ControllerBase
     {
         private readonly PermaContext _context;
-        private GenericRepository<Location> genericRepository;
+        private GenericRepository<Location> locationRepository;
 
         public LocationsController(PermaContext context)
         {
             _context = context;
-            genericRepository = new GenericRepository<Location>(context);
+            locationRepository = new GenericRepository<Location>(context);
         }
 
         // GET: api/Locations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Location>>> GetLocations()
+        public ActionResult<IEnumerable<Location>> GetLocations()
         {
-            return await _context.Locations.ToListAsync();
+            return locationRepository.Get().ToList();
         }
 
         // GET: api/Locations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Location>> GetLocation(int id)
+        public ActionResult<Location> GetLocation(int id)
         {
-            var location = await _context.Locations.FindAsync(id);
+            var location = locationRepository.GetByID(id);
 
             if (location == null)
             {
@@ -48,7 +48,7 @@ namespace Permackathon.UI.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLocation(int id, Location location)
+        public IActionResult PutLocation(int id, Location location)
         {
             if (id != location.Id)
             {
@@ -59,7 +59,7 @@ namespace Permackathon.UI.Controllers
 
             try
             {
-                await _context.SaveChangesAsync();
+                 _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,26 +80,23 @@ namespace Permackathon.UI.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Location>> PostLocation(Location location)
+        public ActionResult<Location> PostLocation(Location location)
         {
-            _context.Locations.Add(location);
-            await _context.SaveChangesAsync();
-
+            locationRepository.Insert(location);
             return CreatedAtAction("GetLocation", new { id = location.Id }, location);
         }
 
         // DELETE: api/Locations/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Location>> DeleteLocation(int id)
+        public ActionResult<Location> DeleteLocation(int id)
         {
-            var location = await _context.Locations.FindAsync(id);
+            var location = locationRepository.GetByID(id);
             if (location == null)
             {
                 return NotFound();
             }
 
-            _context.Locations.Remove(location);
-            await _context.SaveChangesAsync();
+            locationRepository.Delete(location);
 
             return location;
         }
