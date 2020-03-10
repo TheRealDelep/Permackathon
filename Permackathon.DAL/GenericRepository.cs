@@ -4,6 +4,7 @@ using System.Linq;
 using System.Data;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Permackathon.DAL
 {
@@ -45,6 +46,29 @@ namespace Permackathon.DAL
                 return query.ToList();
             }
         }
+
+        //public virtual IEnumerable<TEntity> Get()
+        //{
+        //    IEnumerable<PropertyInfo> propertiesToInclude =
+        //        dbSet
+        //        .GetType()
+        //        .GetGenericArguments()
+        //        .First()
+        //        .GetProperties()
+        //        .Where(x => (x.PropertyType.IsClass && x.PropertyType != typeof(string)));
+
+        //    foreach (PropertyInfo prop in propertiesToInclude)
+        //    {
+        //        dbSet.Include(prop.Name);
+        //    }
+
+        //    return dbSet;
+        //}
+
+        //public virtual IEnumerable<TEntity> Get()
+        //{
+        //    dbSet.
+        //}
 
         public virtual TEntity GetByID(int id)
         {

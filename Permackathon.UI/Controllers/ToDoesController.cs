@@ -27,7 +27,7 @@ namespace Permackathon.UI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<ToDo>> GetToDos()
         {
-            return toDoRepository.Get().ToList();
+            return toDoRepository.Get(null, null, "Categorie,Prioritiy,State,Site,Responsable,Author").ToList();
             //await _context.ToDos.ToListAsync();
         }
 
@@ -36,7 +36,7 @@ namespace Permackathon.UI.Controllers
         public ActionResult<ToDo> GetToDo(int id)
         {
             var toDo = toDoRepository.GetByID(id);
-                //await _context.ToDos.FindAsync(id);
+            //await _context.ToDos.FindAsync(id);
 
             if (toDo == null)
             {
@@ -44,6 +44,16 @@ namespace Permackathon.UI.Controllers
             }
 
             return toDo;
+        }
+
+        // GET: api/ToDoes/SiteId/StatusId
+        [HttpGet("{siteId}/{statusId}")]
+        public ActionResult<IEnumerable<ToDo>> GetBySiteAndStatus(int siteId, int statusId)
+        {
+            //toDoRepository.
+
+            return toDoRepository.Get(null, null, "Categorie,Prioritiy,State,Site,Responsable,Author").Where(x => (x.Site.Id == siteId && x.State.Id == statusId)).ToList();
+            //return toDoRepository.Get();
         }
 
         // PUT: api/ToDoes/5
@@ -85,7 +95,7 @@ namespace Permackathon.UI.Controllers
         [HttpPost]
         public ActionResult<ToDo> PostToDo(ToDo toDo)
         {
-            _context.ToDos.Add(toDo); 
+            _context.ToDos.Add(toDo);
             toDoRepository.Insert(toDo);
 
             //await _context.SaveChangesAsync();
