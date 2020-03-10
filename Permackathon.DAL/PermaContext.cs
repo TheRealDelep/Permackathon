@@ -19,7 +19,7 @@ namespace Permackathon.DAL
 
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=PermaDB;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Server=192.168.0.100\HACKATHON;Database=Python;user id=PythonUser;Password=PythonUser;");
                 optionsBuilder.EnableSensitiveDataLogging();
             }
         }
