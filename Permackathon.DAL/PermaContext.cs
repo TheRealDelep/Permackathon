@@ -19,7 +19,7 @@ namespace Permackathon.DAL
 
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=FacilityDB;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Server=192.168.0.100\HACKATHON;Database=Python;user id=PythonUser;Password=PythonUser;");
                 optionsBuilder.EnableSensitiveDataLogging();
             }
         }
@@ -38,7 +38,6 @@ namespace Permackathon.DAL
         public DbSet<Category> Categories { get; set; }
         public DbSet<Site> Sites { get; set; }
         public DbSet<Location> Locations { get; set; }
-        public DbSet<MemberRole> MemberRoles { get; set; }
         public DbSet<Priority> Priorities { get; set; }
         public DbSet<State> States { get; set; }
     }
