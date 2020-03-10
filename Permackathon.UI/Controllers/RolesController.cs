@@ -12,58 +12,60 @@ namespace Permackathon.UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LocationsController : ControllerBase
+    public class RolesController : ControllerBase
     {
         private readonly PermaContext _context;
-        private GenericRepository<Location> locationRepository;
+        private GenericRepository<Role> roleRepository;
 
-        public LocationsController(PermaContext context)
+        public RolesController(PermaContext context)
         {
             _context = context;
-            locationRepository = new GenericRepository<Location>(context);
+            roleRepository = new GenericRepository<Role>(context);
         }
 
-        // GET: api/Locations
+        // GET: api/Roles
         [HttpGet]
-        public ActionResult<IEnumerable<Location>> GetLocations()
+        public ActionResult<IEnumerable<Role>> GetRoles()
         {
-            return locationRepository.Get().ToList();
+            return roleRepository.Get().ToList();
+            
         }
 
-        // GET: api/Locations/5
+        // GET: api/Roles/5
         [HttpGet("{id}")]
-        public ActionResult<Location> GetLocation(int id)
+        public ActionResult<Role> GetRole(int id)
         {
-            var location = locationRepository.GetByID(id);
-
-            if (location == null)
+            var role = roleRepository.GetByID(id);
+              
+            if (role == null)
             {
                 return NotFound();
             }
 
-            return location;
+            return role;
         }
 
-        // PUT: api/Locations/5
+        // PUT: api/Roles/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public IActionResult PutLocation(int id, Location location)
+        public ActionResult PutRole(int id, Role role)
         {
-            if (id != location.Id)
+            if (id != role.Id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(location).State = EntityState.Modified;
+           // ?
+            _context.Entry(role).State = EntityState.Modified;
 
             try
             {
-                 _context.SaveChangesAsync();
+                roleRepository.Update(role);
+                
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LocationExists(id))
+                if (!RoleExists(id))
                 {
                     return NotFound();
                 }
@@ -76,34 +78,37 @@ namespace Permackathon.UI.Controllers
             return NoContent();
         }
 
-        // POST: api/Locations
+        // POST: api/Roles
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public ActionResult<Location> PostLocation(Location location)
+        public ActionResult<Role> PostRole(Role role)
         {
-            locationRepository.Insert(location);
-            return CreatedAtAction("GetLocation", new { id = location.Id }, location);
+            roleRepository.Insert(role);
+            //_context.Roles.Add(role);
+            //await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetRole", new { id = role.Id }, role);
         }
 
-        // DELETE: api/Locations/5
+        // DELETE: api/Roles/5
         [HttpDelete("{id}")]
-        public ActionResult<Location> DeleteLocation(int id)
+        public ActionResult<Role> DeleteRole(int id)
         {
-            var location = locationRepository.GetByID(id);
-            if (location == null)
+            var role = roleRepository.GetByID(id);
+            if (role == null)
             {
                 return NotFound();
             }
 
-            locationRepository.Delete(location);
-
-            return location;
+            roleRepository.Delete(role);
+            
+            return role;
         }
 
-        private bool LocationExists(int id)
+        private bool RoleExists(int id)
         {
-            return _context.Locations.Any(e => e.Id == id);
+            return _context.Roles.Any(e => e.Id == id);
         }
     }
 }

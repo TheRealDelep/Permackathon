@@ -12,58 +12,58 @@ namespace Permackathon.UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LocationsController : ControllerBase
+    public class MembersController : ControllerBase
     {
         private readonly PermaContext _context;
-        private GenericRepository<Location> locationRepository;
+        private GenericRepository<Member> memberRepository;
 
-        public LocationsController(PermaContext context)
+        public MembersController(PermaContext context)
         {
             _context = context;
-            locationRepository = new GenericRepository<Location>(context);
+            memberRepository = new GenericRepository<Member>(context);
         }
 
-        // GET: api/Locations
+        // GET: api/Members
         [HttpGet]
-        public ActionResult<IEnumerable<Location>> GetLocations()
+        public ActionResult<IEnumerable<Member>> GetMembers()
         {
-            return locationRepository.Get().ToList();
+            return memberRepository.Get().ToList();
         }
 
-        // GET: api/Locations/5
+        // GET: api/Members/5
         [HttpGet("{id}")]
-        public ActionResult<Location> GetLocation(int id)
+        public ActionResult<Member> GetMember(int id)
         {
-            var location = locationRepository.GetByID(id);
+            var member = memberRepository.GetByID(id);
 
-            if (location == null)
+            if (member == null)
             {
                 return NotFound();
             }
 
-            return location;
+            return member;
         }
 
-        // PUT: api/Locations/5
+        // PUT: api/Members/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public IActionResult PutLocation(int id, Location location)
+        public ActionResult PutMember(int id, Member member)
         {
-            if (id != location.Id)
+            if (id != member.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(location).State = EntityState.Modified;
+            _context.Entry(member).State = EntityState.Modified;
 
             try
             {
-                 _context.SaveChangesAsync();
+                memberRepository.Update(member);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LocationExists(id))
+                if (!MemberExists(id))
                 {
                     return NotFound();
                 }
@@ -76,34 +76,36 @@ namespace Permackathon.UI.Controllers
             return NoContent();
         }
 
-        // POST: api/Locations
+        // POST: api/Members
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public ActionResult<Location> PostLocation(Location location)
+        public ActionResult<Member> PostMember(Member member)
         {
-            locationRepository.Insert(location);
-            return CreatedAtAction("GetLocation", new { id = location.Id }, location);
+            memberRepository.Insert(member);
+            
+            return CreatedAtAction("GetMember", new { id = member.Id }, member);
         }
 
-        // DELETE: api/Locations/5
+        // DELETE: api/Members/5
         [HttpDelete("{id}")]
-        public ActionResult<Location> DeleteLocation(int id)
+        public ActionResult<Member> DeleteMember(int id)
         {
-            var location = locationRepository.GetByID(id);
-            if (location == null)
+            var member = memberRepository.GetByID(id);
+            if (member == null)
             {
                 return NotFound();
             }
 
-            locationRepository.Delete(location);
+            memberRepository.Delete(member);
+            
 
-            return location;
+            return member;
         }
 
-        private bool LocationExists(int id)
+        private bool MemberExists(int id)
         {
-            return _context.Locations.Any(e => e.Id == id);
+            return _context.Members.Any(e => e.Id == id);
         }
     }
 }

@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+    <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +19,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Permackathon.DAL\Permackathon.DAL.csproj" />
   </ItemGroup>
-
-
-
 </Project>

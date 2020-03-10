@@ -12,58 +12,58 @@ namespace Permackathon.UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LocationsController : ControllerBase
+    public class SitesController : ControllerBase
     {
         private readonly PermaContext _context;
-        private GenericRepository<Location> locationRepository;
+        private GenericRepository<Site> siteRepository;
 
-        public LocationsController(PermaContext context)
+        public SitesController(PermaContext context)
         {
             _context = context;
-            locationRepository = new GenericRepository<Location>(context);
+            siteRepository = new GenericRepository<Site>(context);
         }
 
-        // GET: api/Locations
+        // GET: api/Sites
         [HttpGet]
-        public ActionResult<IEnumerable<Location>> GetLocations()
+        public ActionResult<IEnumerable<Site>> GetSites()
         {
-            return locationRepository.Get().ToList();
+            return siteRepository.Get().ToList();
         }
 
-        // GET: api/Locations/5
+        // GET: api/Sites/5
         [HttpGet("{id}")]
-        public ActionResult<Location> GetLocation(int id)
+        public async Task<ActionResult<Site>> GetSite(int id)
         {
-            var location = locationRepository.GetByID(id);
+            var site = await _context.Sites.FindAsync(id);
 
-            if (location == null)
+            if (site == null)
             {
                 return NotFound();
             }
 
-            return location;
+            return site;
         }
 
-        // PUT: api/Locations/5
+        // PUT: api/Sites/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public IActionResult PutLocation(int id, Location location)
+        public ActionResult PutSite(int id, Site site)
         {
-            if (id != location.Id)
+            if (id != site.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(location).State = EntityState.Modified;
+            _context.Entry(site).State = EntityState.Modified;
 
             try
             {
-                 _context.SaveChangesAsync();
+                siteRepository.Update(site);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LocationExists(id))
+                if (!SiteExists(id))
                 {
                     return NotFound();
                 }
@@ -76,34 +76,35 @@ namespace Permackathon.UI.Controllers
             return NoContent();
         }
 
-        // POST: api/Locations
+        // POST: api/Sites
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public ActionResult<Location> PostLocation(Location location)
+        public ActionResult<Site> PostSite(Site site)
         {
-            locationRepository.Insert(location);
-            return CreatedAtAction("GetLocation", new { id = location.Id }, location);
+            siteRepository.Insert(site);
+            
+            return CreatedAtAction("GetSite", new { id = site.Id }, site);
         }
 
-        // DELETE: api/Locations/5
+        // DELETE: api/Sites/5
         [HttpDelete("{id}")]
-        public ActionResult<Location> DeleteLocation(int id)
+        public ActionResult<Site> DeleteSite(int id)
         {
-            var location = locationRepository.GetByID(id);
-            if (location == null)
+            var site = siteRepository.GetByID(id);
+            if (site == null)
             {
                 return NotFound();
             }
 
-            locationRepository.Delete(location);
-
-            return location;
+            siteRepository.Delete(site);
+            
+            return site;
         }
 
-        private bool LocationExists(int id)
+        private bool SiteExists(int id)
         {
-            return _context.Locations.Any(e => e.Id == id);
+            return _context.Sites.Any(e => e.Id == id);
         }
     }
 }

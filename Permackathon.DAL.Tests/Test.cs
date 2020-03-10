@@ -28,7 +28,7 @@ namespace Permackathon.DAL.Tests
                 genericRepository.Insert(membre);
                 memoryContext.SaveChanges();
                 //Assert
-                var testMember = genericRepository.GetByID(membre.id);
+                var testMember = genericRepository.GetByID(membre.Id);
                 Assert.AreEqual("Bob", testMember.LastName);
             }
         }
@@ -48,9 +48,7 @@ namespace Permackathon.DAL.Tests
 
                 //Arrang
                 Location location = new Location { City = "bxl", Number = "20", Street = "Av. Sloubie", Zipcode = "1000" };
-                List<Location> l = new List<Location>();
-                l.Add(location);
-                Site site = new Site { Locations = l, Name = "Kaamelott", Phone = "047852948" };
+                Site site = new Site { Location = location, Name = "Kaamelott", Phone = "047852948" };
                 locationRepository.Insert(location);
                 siteRepository.Insert(site);
                 memoryContext.SaveChanges();
@@ -58,7 +56,6 @@ namespace Permackathon.DAL.Tests
                 //Assert
                 var testLocation = locationRepository.GetByID(location.Id);
                 var testSite = siteRepository.GetByID(site.Id);
-                Assert.AreEqual(testSite.Locations.FirstOrDefault().City, "bxl");
                 Assert.AreEqual(testSite.Name, "Kaamelott");
             }
         }
@@ -78,9 +75,7 @@ namespace Permackathon.DAL.Tests
 
                 //Arrang
                 Location location = new Location { City = "bxl", Number = "20", Street = "Av. Sloubie", Zipcode = "1000" };
-                List<Location> l = new List<Location>();
-                l.Add(location);
-                Site site = new Site { Locations = l, Name = "Kaamelott", Phone = "047852948" };
+                Site site = new Site { Location = location, Name = "Kaamelott", Phone = "047852948" };
                 locationRepository.Insert(location);
                 siteRepository.Insert(site);
                 memoryContext.SaveChanges();
@@ -93,7 +88,6 @@ namespace Permackathon.DAL.Tests
                 memoryContext.SaveChanges();
                 //Assert.AreEqual(siteRepository.Get().Count(),0);
                 //Assert.AreEqual(locationRepository.Get().Count(), 0);
-                Assert.AreEqual(siteRepository.GetByID(site.Id).Locations.Count(), 0);
                 Assert.AreEqual(locationRepository.Get().Count(), 0);
             }
         }
