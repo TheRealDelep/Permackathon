@@ -45,12 +45,29 @@ namespace Permackathon.UI.Controllers
 
             return toDo;
         }
+        //-----------list of task of a SELECTEDyear
+        //1. post
+        [HttpPost]
+        public ActionResult<DateTime> PostToDoDate(int selectedYear /* or DateTime selected date*/)
+        {
+            DateTime theYear = Convert.ToDateTime(selectedYear + "-12-31");
+
+
+            return CreatedAtAction("GetToDoByDate", theYear);
+        }
+        //2. get
+        [HttpGet]
+        public ActionResult<IEnumerable<ToDo>> GetToDoByDate(DateTime selectedDate )
+        {
+            return toDoRepository.Get(item => item.DateStart < selectedDate && item.DateStart> selectedDate.AddYears(-1)).ToList();
+            
+        }
 
         // PUT: api/ToDoes/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutToDo(int id, ToDo toDo)
+        public  IActionResult PutToDo(int id, ToDo toDo)
         {
             if (id != toDo.Id)
             {
@@ -86,7 +103,6 @@ namespace Permackathon.UI.Controllers
         public ActionResult<ToDo> PostToDo(ToDo toDo)
         {
            
-            // maggage
             toDoRepository.Insert(toDo);
 
             //await _context.SaveChangesAsync();
