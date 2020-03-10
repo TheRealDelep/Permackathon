@@ -10,7 +10,6 @@ namespace Permackathon.DAL.Entities
         public string Description { get; set; }
         public DateTime DateStart { get; set; }
         public DateTime? DateEnd { get; set; }
-
         public Member Author { get; set; }
         public Member Responsable { get; set; }
         public Site Site { get; set; }
