@@ -8,12 +8,12 @@ using System.Data;
 
 namespace Permackathon.DAL
 {
-    public class GenericRepository<T> where T : Entity
+    public class ReflectionRepository<T> where T : Entity
     {
         private PermaContext context;
         private DbSet<T> dbSet;
 
-        public GenericRepository(PermaContext context)
+        public ReflectionRepository(PermaContext context)
         {
             this.context = context;
             dbSet = context.Set<T>();

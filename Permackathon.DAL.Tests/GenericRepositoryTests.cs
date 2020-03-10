@@ -21,8 +21,8 @@ namespace Permackathon.DAL.Tests
 
             using (var context = new PermaContext(options))
             {
-                GenericRepository<ToDo> todoRepository = new GenericRepository<ToDo>(context);
-                GenericRepository<State> stateRepo = new GenericRepository<State>(context);
+                ReflectionRepository<ToDo> todoRepository = new ReflectionRepository<ToDo>(context);
+                ReflectionRepository<State> stateRepo = new ReflectionRepository<State>(context);
 
                 var state = new State()
                 {
