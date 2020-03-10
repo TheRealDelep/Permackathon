@@ -25,9 +25,9 @@ namespace Permackathon.UI.Controllers
 
         // GET: api/Locations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Location>>> GetLocations()
+        public ActionResult<IEnumerable<Location>> GetLocations()
         {
-            return await _context.Locations.ToListAsync();
+            return genericRepository.Get().ToList();
         }
 
         // GET: api/Locations/5
@@ -80,10 +80,9 @@ namespace Permackathon.UI.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Location>> PostLocation(Location location)
+        public ActionResult<Location> PostLocation(Location location)
         {
-            _context.Locations.Add(location);
-            await _context.SaveChangesAsync();
+            genericRepository.Insert(location);
 
             return CreatedAtAction("GetLocation", new { id = location.Id }, location);
         }
