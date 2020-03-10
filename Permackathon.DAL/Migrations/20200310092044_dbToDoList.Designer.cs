@@ -10,8 +10,8 @@ using Permackathon.DAL;
 namespace Permackathon.DAL.Migrations
 {
     [DbContext(typeof(PermaContext))]
-    [Migration("20200309195909_v1")]
-    partial class v1
+    [Migration("20200310092044_dbToDoList")]
+    partial class dbToDoList
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,12 +31,7 @@ namespace Permackathon.DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ToDoId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ToDoId");
 
                     b.ToTable("Categories");
                 });
@@ -54,9 +49,6 @@ namespace Permackathon.DAL.Migrations
                     b.Property<string>("Number")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SiteId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Street")
                         .HasColumnType("nvarchar(max)");
 
@@ -64,8 +56,6 @@ namespace Permackathon.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SiteId");
 
                     b.ToTable("Locations");
                 });
@@ -104,12 +94,7 @@ namespace Permackathon.DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ToDoId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ToDoId");
 
                     b.ToTable("Priorities");
                 });
@@ -141,6 +126,9 @@ namespace Permackathon.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -148,6 +136,8 @@ namespace Permackathon.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
 
                     b.ToTable("Sites");
                 });
@@ -162,12 +152,7 @@ namespace Permackathon.DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ToDoId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ToDoId");
 
                     b.ToTable("States");
                 });
@@ -182,6 +167,9 @@ namespace Permackathon.DAL.Migrations
                     b.Property<int?>("Authorid")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CategorieId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DateEnd")
                         .HasColumnType("datetime2");
 
@@ -194,42 +182,33 @@ namespace Permackathon.DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PrioritiyId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("Responsableid")
                         .HasColumnType("int");
 
                     b.Property<int?>("SiteId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("StateId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Authorid");
+
+                    b.HasIndex("CategorieId");
+
+                    b.HasIndex("PrioritiyId");
 
                     b.HasIndex("Responsableid");
 
                     b.HasIndex("SiteId");
 
+                    b.HasIndex("StateId");
+
                     b.ToTable("ToDos");
-                });
-
-            modelBuilder.Entity("Permackathon.DAL.Entities.Category", b =>
-                {
-                    b.HasOne("Permackathon.DAL.Entities.ToDo", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("ToDoId");
-                });
-
-            modelBuilder.Entity("Permackathon.DAL.Entities.Location", b =>
-                {
-                    b.HasOne("Permackathon.DAL.Entities.Site", null)
-                        .WithMany("Locations")
-                        .HasForeignKey("SiteId");
-                });
-
-            modelBuilder.Entity("Permackathon.DAL.Entities.Priority", b =>
-                {
-                    b.HasOne("Permackathon.DAL.Entities.ToDo", null)
-                        .WithMany("Priorities")
-                        .HasForeignKey("ToDoId");
                 });
 
             modelBuilder.Entity("Permackathon.DAL.Entities.Role", b =>
@@ -239,11 +218,11 @@ namespace Permackathon.DAL.Migrations
                         .HasForeignKey("Memberid");
                 });
 
-            modelBuilder.Entity("Permackathon.DAL.Entities.State", b =>
+            modelBuilder.Entity("Permackathon.DAL.Entities.Site", b =>
                 {
-                    b.HasOne("Permackathon.DAL.Entities.ToDo", null)
-                        .WithMany("States")
-                        .HasForeignKey("ToDoId");
+                    b.HasOne("Permackathon.DAL.Entities.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId");
                 });
 
             modelBuilder.Entity("Permackathon.DAL.Entities.ToDo", b =>
@@ -252,6 +231,14 @@ namespace Permackathon.DAL.Migrations
                         .WithMany()
                         .HasForeignKey("Authorid");
 
+                    b.HasOne("Permackathon.DAL.Entities.Category", "Categorie")
+                        .WithMany()
+                        .HasForeignKey("CategorieId");
+
+                    b.HasOne("Permackathon.DAL.Entities.Priority", "Prioritiy")
+                        .WithMany()
+                        .HasForeignKey("PrioritiyId");
+
                     b.HasOne("Permackathon.DAL.Entities.Member", "Responsable")
                         .WithMany()
                         .HasForeignKey("Responsableid");
@@ -259,6 +246,10 @@ namespace Permackathon.DAL.Migrations
                     b.HasOne("Permackathon.DAL.Entities.Site", "Site")
                         .WithMany()
                         .HasForeignKey("SiteId");
+
+                    b.HasOne("Permackathon.DAL.Entities.State", "State")
+                        .WithMany()
+                        .HasForeignKey("StateId");
                 });
 #pragma warning restore 612, 618
         }
