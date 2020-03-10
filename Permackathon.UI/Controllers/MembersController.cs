@@ -12,60 +12,58 @@ namespace Permackathon.UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RolesController : ControllerBase
+    public class MembersController : ControllerBase
     {
         private readonly PermaContext _context;
-        private GenericRepository<Role> roleRepository;
+        private GenericRepository<Member> memberRepository;
 
-        public RolesController(PermaContext context)
+        public MembersController(PermaContext context)
         {
             _context = context;
-            roleRepository = new GenericRepository<Role>(context);
+            memberRepository = new GenericRepository<Member>(context);
         }
 
-        // GET: api/Roles
+        // GET: api/Members
         [HttpGet]
-        public ActionResult<IEnumerable<Role>> GetRoles()
+        public ActionResult<IEnumerable<Member>> GetMembers()
         {
-            return roleRepository.Get().ToList();
-            
+            return memberRepository.Get().ToList();
         }
 
-        // GET: api/Roles/5
+        // GET: api/Members/5
         [HttpGet("{id}")]
-        public ActionResult<Role> GetRole(int id)
+        public ActionResult<Member> GetMember(int id)
         {
-            var role = roleRepository.GetByID(id);
-              
-            if (role == null)
+            var member = memberRepository.GetByID(id);
+
+            if (member == null)
             {
                 return NotFound();
             }
 
-            return role;
+            return member;
         }
 
-        // PUT: api/Roles/5
+        // PUT: api/Members/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public ActionResult PutRole(int id, Role role)
+        public ActionResult PutMember(int id, Member member)
         {
-            if (id != role.Id)
+            if (id != member.Id)
             {
                 return BadRequest();
             }
-           // ?
-            _context.Entry(role).State = EntityState.Modified;
+
+            _context.Entry(member).State = EntityState.Modified;
 
             try
             {
-                roleRepository.Update(role);
-                
+                memberRepository.Update(member);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RoleExists(id))
+                if (!MemberExists(id))
                 {
                     return NotFound();
                 }
@@ -78,37 +76,36 @@ namespace Permackathon.UI.Controllers
             return NoContent();
         }
 
-        // POST: api/Roles
+        // POST: api/Members
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public ActionResult<Role> PostRole(Role role)
+        public ActionResult<Member> PostMember(Member member)
         {
-            roleRepository.Insert(role);
-            //_context.Roles.Add(role);
-            //await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetRole", new { id = role.Id }, role);
+            memberRepository.Insert(member);
+            
+            return CreatedAtAction("GetMember", new { id = member.Id }, member);
         }
 
-        // DELETE: api/Roles/5
+        // DELETE: api/Members/5
         [HttpDelete("{id}")]
-        public ActionResult<Role> DeleteRole(int id)
+        public ActionResult<Member> DeleteMember(int id)
         {
-            var role = roleRepository.GetByID(id);
-            if (role == null)
+            var member = memberRepository.GetByID(id);
+            if (member == null)
             {
                 return NotFound();
             }
 
-            roleRepository.Delete(role);
+            memberRepository.Delete(member);
             
-            return role;
+
+            return member;
         }
 
-        private bool RoleExists(int id)
+        private bool MemberExists(int id)
         {
-            return _context.Roles.Any(e => e.Id == id);
+            return _context.Members.Any(e => e.Id == id);
         }
     }
 }

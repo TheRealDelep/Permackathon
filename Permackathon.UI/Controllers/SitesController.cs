@@ -12,60 +12,58 @@ namespace Permackathon.UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RolesController : ControllerBase
+    public class SitesController : ControllerBase
     {
         private readonly PermaContext _context;
-        private GenericRepository<Role> roleRepository;
+        private GenericRepository<Site> siteRepository;
 
-        public RolesController(PermaContext context)
+        public SitesController(PermaContext context)
         {
             _context = context;
-            roleRepository = new GenericRepository<Role>(context);
+            siteRepository = new GenericRepository<Site>(context);
         }
 
-        // GET: api/Roles
+        // GET: api/Sites
         [HttpGet]
-        public ActionResult<IEnumerable<Role>> GetRoles()
+        public ActionResult<IEnumerable<Site>> GetSites()
         {
-            return roleRepository.Get().ToList();
-            
+            return siteRepository.Get().ToList();
         }
 
-        // GET: api/Roles/5
+        // GET: api/Sites/5
         [HttpGet("{id}")]
-        public ActionResult<Role> GetRole(int id)
+        public async Task<ActionResult<Site>> GetSite(int id)
         {
-            var role = roleRepository.GetByID(id);
-              
-            if (role == null)
+            var site = await _context.Sites.FindAsync(id);
+
+            if (site == null)
             {
                 return NotFound();
             }
 
-            return role;
+            return site;
         }
 
-        // PUT: api/Roles/5
+        // PUT: api/Sites/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public ActionResult PutRole(int id, Role role)
+        public ActionResult PutSite(int id, Site site)
         {
-            if (id != role.Id)
+            if (id != site.Id)
             {
                 return BadRequest();
             }
-           // ?
-            _context.Entry(role).State = EntityState.Modified;
+
+            _context.Entry(site).State = EntityState.Modified;
 
             try
             {
-                roleRepository.Update(role);
-                
+                siteRepository.Update(site);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RoleExists(id))
+                if (!SiteExists(id))
                 {
                     return NotFound();
                 }
@@ -78,37 +76,35 @@ namespace Permackathon.UI.Controllers
             return NoContent();
         }
 
-        // POST: api/Roles
+        // POST: api/Sites
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public ActionResult<Role> PostRole(Role role)
+        public ActionResult<Site> PostSite(Site site)
         {
-            roleRepository.Insert(role);
-            //_context.Roles.Add(role);
-            //await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetRole", new { id = role.Id }, role);
+            siteRepository.Insert(site);
+            
+            return CreatedAtAction("GetSite", new { id = site.Id }, site);
         }
 
-        // DELETE: api/Roles/5
+        // DELETE: api/Sites/5
         [HttpDelete("{id}")]
-        public ActionResult<Role> DeleteRole(int id)
+        public ActionResult<Site> DeleteSite(int id)
         {
-            var role = roleRepository.GetByID(id);
-            if (role == null)
+            var site = siteRepository.GetByID(id);
+            if (site == null)
             {
                 return NotFound();
             }
 
-            roleRepository.Delete(role);
+            siteRepository.Delete(site);
             
-            return role;
+            return site;
         }
 
-        private bool RoleExists(int id)
+        private bool SiteExists(int id)
         {
-            return _context.Roles.Any(e => e.Id == id);
+            return _context.Sites.Any(e => e.Id == id);
         }
     }
 }
