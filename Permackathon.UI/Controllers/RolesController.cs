@@ -28,7 +28,7 @@ namespace Permackathon.UI.Controllers
         public ActionResult<IEnumerable<Role>> GetRoles()
         {
             return roleRepository.Get().ToList();
-            //return await _context.Roles.ToListAsync();
+            
         }
 
         // GET: api/Roles/5
@@ -36,8 +36,7 @@ namespace Permackathon.UI.Controllers
         public ActionResult<Role> GetRole(int id)
         {
             var role = roleRepository.GetByID(id);
-                //await _context.Roles.FindAsync(id);
-
+              
             if (role == null)
             {
                 return NotFound();
@@ -50,19 +49,19 @@ namespace Permackathon.UI.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public IActionResult PutRole(int id, Role role)
+        public ActionResult PutRole(int id, Role role)
         {
             if (id != role.Id)
             {
                 return BadRequest();
             }
-          
+          // ?
             _context.Entry(role).State = EntityState.Modified;
 
             try
             {
                 roleRepository.Update(role);
-                //await _context.SaveChangesAsync();
+                
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -94,17 +93,16 @@ namespace Permackathon.UI.Controllers
 
         // DELETE: api/Roles/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Role>> DeleteRole(int id)
+        public ActionResult<Role> DeleteRole(int id)
         {
-            var role = await _context.Roles.FindAsync(id);
+            var role = roleRepository.GetByID(id);
             if (role == null)
             {
                 return NotFound();
             }
 
-            _context.Roles.Remove(role);
-            await _context.SaveChangesAsync();
-
+            roleRepository.Delete(role);
+            
             return role;
         }
 
