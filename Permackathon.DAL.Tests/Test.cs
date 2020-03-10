@@ -28,7 +28,7 @@ namespace Permackathon.DAL.Tests
                 genericRepository.Insert(membre);
                 memoryContext.SaveChanges();
                 //Assert
-                var testMember = genericRepository.GetByID(membre.id);
+                var testMember = genericRepository.GetByID(membre.Id);
                 Assert.AreEqual("Bob", testMember.LastName);
             }
         }
