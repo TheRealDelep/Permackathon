@@ -15,24 +15,28 @@ namespace Permackathon.UI.Controllers
     public class RolesController : ControllerBase
     {
         private readonly PermaContext _context;
+        private GenericRepository<Role> roleRepository;
 
         public RolesController(PermaContext context)
         {
             _context = context;
+            roleRepository = new GenericRepository<Role>(context);
         }
 
         // GET: api/Roles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
+        public ActionResult<IEnumerable<Role>> GetRoles()
         {
-            return await _context.Roles.ToListAsync();
+            return roleRepository.Get().ToList();
+            //return await _context.Roles.ToListAsync();
         }
 
         // GET: api/Roles/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Role>> GetRole(int id)
+        public ActionResult<Role> GetRole(int id)
         {
-            var role = await _context.Roles.FindAsync(id);
+            var role = roleRepository.GetByID(id);
+                //await _context.Roles.FindAsync(id);
 
             if (role == null)
             {
@@ -46,18 +50,19 @@ namespace Permackathon.UI.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRole(int id, Role role)
+        public IActionResult PutRole(int id, Role role)
         {
             if (id != role.Id)
             {
                 return BadRequest();
             }
-
+          
             _context.Entry(role).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                roleRepository.Update(role);
+                //await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -78,10 +83,11 @@ namespace Permackathon.UI.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Role>> PostRole(Role role)
+        public ActionResult<Role> PostRole(Role role)
         {
-            _context.Roles.Add(role);
-            await _context.SaveChangesAsync();
+            roleRepository.Insert(role);
+            //_context.Roles.Add(role);
+            //await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRole", new { id = role.Id }, role);
         }
