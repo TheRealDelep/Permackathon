@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Permackathon.DAL;
+using Permackathon.DAL.Entities;
 
 namespace Permackathon.UI
 {
@@ -24,6 +26,15 @@ namespace Permackathon.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<PermaContext>();
+            services.AddScoped<GenericRepository<Category>>();
+            services.AddScoped<GenericRepository<Location>>();
+            services.AddScoped<GenericRepository<Site>>();
+            services.AddScoped<GenericRepository<ToDo>>();
+            services.AddScoped<GenericRepository<Member>>();
+            services.AddScoped<GenericRepository<Role>>();
+            services.AddScoped<GenericRepository<State>>();
+            services.AddScoped<GenericRepository<Priority>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
