@@ -24,6 +24,20 @@ namespace Permackathon.DAL
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
         {
+            IEnumerable<PropertyInfo> propertiesToInclude =
+                            dbSet
+                            .GetType()
+                            .GetGenericArguments()
+                            .First()
+                            .GetProperties()
+                            .Where(x => (x.PropertyType.IsClass && x.PropertyType != typeof(string)));
+
+            foreach (var item in propertiesToInclude)
+            {
+                includeProperties += item.Name;
+                includeProperties += ",";
+            }
+
             IQueryable<TEntity> query = dbSet;
 
             if (filter != null)
@@ -46,29 +60,6 @@ namespace Permackathon.DAL
                 return query.ToList();
             }
         }
-
-        //public virtual IEnumerable<TEntity> Get()
-        //{
-        //    IEnumerable<PropertyInfo> propertiesToInclude =
-        //        dbSet
-        //        .GetType()
-        //        .GetGenericArguments()
-        //        .First()
-        //        .GetProperties()
-        //        .Where(x => (x.PropertyType.IsClass && x.PropertyType != typeof(string)));
-
-        //    foreach (PropertyInfo prop in propertiesToInclude)
-        //    {
-        //        dbSet.Include(prop.Name);
-        //    }
-
-        //    return dbSet;
-        //}
-
-        //public virtual IEnumerable<TEntity> Get()
-        //{
-        //    dbSet.
-        //}
 
         public virtual TEntity GetByID(int id)
         {

@@ -27,8 +27,9 @@ namespace Permackathon.UI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<ToDo>> GetToDos()
         {
-            return toDoRepository.Get(null, null, "Categorie,Prioritiy,State,Site,Responsable,Author").ToList();
-            //await _context.ToDos.ToListAsync();
+            //OLD
+            //return toDoRepository.Get(null, null, "Categorie,Prioritiy,State,Site,Responsable,Author").ToList();
+            return toDoRepository.Get().ToList();
         }
 
         // GET: api/ToDoes/5
@@ -50,10 +51,7 @@ namespace Permackathon.UI.Controllers
         [HttpGet("{siteId}/{statusId}")]
         public ActionResult<IEnumerable<ToDo>> GetBySiteAndStatus(int siteId, int statusId)
         {
-            //toDoRepository.
-
             return toDoRepository.Get(null, null, "Categorie,Prioritiy,State,Site,Responsable,Author").Where(x => (x.Site.Id == siteId && x.State.Id == statusId)).ToList();
-            //return toDoRepository.Get();
         }
 
         // PUT: api/ToDoes/5
