@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Permackathon.DAL
+namespace Permackathon.DAL.Entities
 {
     public class ToDo
     {
@@ -16,8 +16,5 @@ namespace Permackathon.DAL
         public List<Priority> Priorities { get; set; }
         public List<Category> Categories { get; set; }
         public List<State> States { get; set; }
-
-
-
     }
 }
