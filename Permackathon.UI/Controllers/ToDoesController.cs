@@ -85,7 +85,8 @@ namespace Permackathon.UI.Controllers
         [HttpPost]
         public ActionResult<ToDo> PostToDo(ToDo toDo)
         {
-            _context.ToDos.Add(toDo); 
+           
+            // maggage
             toDoRepository.Insert(toDo);
 
             //await _context.SaveChangesAsync();
