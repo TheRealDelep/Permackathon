@@ -25,11 +25,41 @@ namespace Permackathon.UI.Controllers
 
         // GET: api/ToDoes
 
-        [HttpGet]
-        public ActionResult<IEnumerable<ToDo>> GetToDos()
+        [HttpGet("filter/{args}")]
+        public ActionResult<IEnumerable<ToDo>> Filtered([FromQuery(Name = "args")]string[] args = null)
         {
-            return toDoRepository.Get().ToList();
-            //await _context.ToDos.ToListAsync();
+            List<ToDo> result = toDoRepository.Get().ToList();
+
+            if (args == null)
+            {
+                return result;
+            }
+
+            foreach (var item in args)
+            {
+                string[] splitted = item.Split('=', StringSplitOptions.RemoveEmptyEntries);
+                int value = int.Parse(splitted[1].Trim());
+
+                foreach (var todo in toDoRepository.Get())
+                {
+                    var prop = todo.GetType().GetProperty(splitted[0]).GetValue(todo);
+                    if (prop is null)
+                    {
+                        result.Remove(todo);
+                    }
+                    else
+                    {
+                        object propId = prop.GetType().GetProperty("Id").GetValue(prop);
+                        if (!propId.Equals(value))
+                        {
+                            result.Remove(todo);
+                        }
+                    }
+                }
+            }
+            //OLD
+            //return toDoRepository.Get(null, null, "Categorie,Prioritiy,State,Site,Responsable,Author").ToList();
+            return result;
         }
 
         // GET: api/ToDoes/5
@@ -39,6 +69,7 @@ namespace Permackathon.UI.Controllers
 
             var toDo = toDoRepository.Get().FirstOrDefault(x => x.Id == id);
             //await _context.ToDos.FindAsync(id);
+
 
             if (toDo == null)
             {
