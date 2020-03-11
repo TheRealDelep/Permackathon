@@ -46,15 +46,7 @@ namespace Permackathon.UI.Controllers
             return toDo;
         }
         //-----------list of task of a SELECTEDyear
-        //1. post
-        [HttpPost]
-        public ActionResult<DateTime> PostToDoDate(int selectedYear /* or DateTime selected date*/)
-        {
-            DateTime theYear = Convert.ToDateTime(selectedYear + "-12-31");
-
-
-            return CreatedAtAction("GetToDoByDate", theYear);
-        }
+        
         //2. get
         [HttpGet]
         public ActionResult<IEnumerable<ToDo>> GetToDoByDate(DateTime selectedDate )
