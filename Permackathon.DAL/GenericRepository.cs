@@ -4,6 +4,7 @@ using System.Linq;
 using System.Data;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Permackathon.DAL
 {
@@ -23,6 +24,20 @@ namespace Permackathon.DAL
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
         {
+            IEnumerable<PropertyInfo> propertiesToInclude =
+                            dbSet
+                            .GetType()
+                            .GetGenericArguments()
+                            .First()
+                            .GetProperties()
+                            .Where(x => (x.PropertyType.IsClass && x.PropertyType != typeof(string)));
+
+            foreach (var item in propertiesToInclude)
+            {
+                includeProperties += item.Name;
+                includeProperties += ",";
+            }
+
             IQueryable<TEntity> query = dbSet;
 
             if (filter != null)
