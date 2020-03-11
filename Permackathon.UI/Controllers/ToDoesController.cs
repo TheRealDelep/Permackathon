@@ -27,9 +27,14 @@ namespace Permackathon.UI.Controllers
 
         // GET: api/ToDoes
         [HttpGet("{args}")]
-        public ActionResult<IEnumerable<ToDo>> GetToDos([FromQuery(Name = "args")]string[] args)
+        public ActionResult<IEnumerable<ToDo>> GetToDos([FromQuery(Name = "args")]string[] args = null)
         {
             List<ToDo> result = toDoRepository.Get().ToList();
+
+            if (args == null)
+            {
+                return result;
+            }
 
             foreach (var item in args)
             {
@@ -59,19 +64,19 @@ namespace Permackathon.UI.Controllers
         }
 
         // GET: api/ToDoes/5
-        [HttpGet("{id}")]
-        public ActionResult<ToDo> GetToDo(int id)
-        {
-            var toDo = toDoRepository.GetByID(id);
-            //await _context.ToDos.FindAsync(id);
+        //[HttpGet("{id}")]
+        //public ActionResult<ToDo> GetToDo(int id)
+        //{
+        //    var toDo = toDoRepository.GetByID(id);
+        //    //await _context.ToDos.FindAsync(id);
 
-            if (toDo == null)
-            {
-                return NotFound();
-            }
+        //    if (toDo == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return toDo;
-        }
+        //    return toDo;
+        //}
 
         //// GET: api/ToDoes/SiteId/StatusId
         //[HttpGet("{siteId}/{statusId}")]
