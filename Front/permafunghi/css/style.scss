@@ -1,0 +1,16 @@
+@import 'base/reset';
+
+@import 'helpers/variables';
+@import 'base/typography';
+
+@import 'components/inputs';
+
+@import 'layout/header';
+@import 'layout/global';
+@import 'layout/footer';
+
+@import 'pages/homepage';
+@import 'pages/menu';
+@import 'pages/tasks';
+@import 'pages/statistics';
+@import 'pages/clients';
