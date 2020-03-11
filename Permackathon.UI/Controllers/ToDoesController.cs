@@ -24,6 +24,7 @@ namespace Permackathon.UI.Controllers
         }
 
         // GET: api/ToDoes
+
         [HttpGet]
         public ActionResult<IEnumerable<ToDo>> GetToDos()
         {
@@ -33,10 +34,11 @@ namespace Permackathon.UI.Controllers
 
         // GET: api/ToDoes/5
         [HttpGet("{id}")]
-        public ActionResult<ToDo> GetToDo(int id)
+        public ActionResult<ToDo> ById(int id)
         {
-            var toDo = toDoRepository.GetByID(id);
-                //await _context.ToDos.FindAsync(id);
+
+            var toDo = toDoRepository.Get().FirstOrDefault(x => x.Id == id);
+            //await _context.ToDos.FindAsync(id);
 
             if (toDo == null)
             {
