@@ -46,14 +46,16 @@ namespace Permackathon.UI.Controllers
             return toDo;
         }
         //-----------list of task of a SELECTEDyear
-        
-        //2. get
-        [HttpGet]
-        public ActionResult<IEnumerable<ToDo>> GetToDoByDate(DateTime selectedDate )
-        {
-            return toDoRepository.Get(item => item.DateStart < selectedDate && item.DateStart> selectedDate.AddYears(-1)).ToList();
+        //
+        ////2. get
+        //[Route("ToDoes/GetByDate")]
+        //[HttpGet] // [HttpGet("{selectedDate}")]
+        //public ActionResult<IEnumerable<ToDo>> GetToDoByDate(string selectedDate )
+        //{
+        //    DateTime dateY = Convert.ToDateTime(selectedDate + "-12-31");
+        //    return toDoRepository.Get(item => item.DateStart < dateY && item.DateStart> dateY.AddYears(-1)).ToList();
             
-        }
+        //}
 
         // PUT: api/ToDoes/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
