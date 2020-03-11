@@ -1,0 +1,38 @@
+.main-login{
+    max-width:100vw;
+    height:100vh;
+    img{
+        margin-bottom: 50px;
+    }
+}
+
+.main-login, .login-form {
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.login-form{
+    max-width:90vw;
+    margin:0 auto;
+    input{
+        margin:10px;
+        padding:10px;
+        width:100%;
+        border: 2px solid $black;
+        &::placeholder {
+            color: $black;
+            font-size: $text;
+          }
+        &:last-child{
+            background: $black;
+            color: $white;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: $text;
+        }
+    }
+}

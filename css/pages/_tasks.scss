@@ -1,0 +1,231 @@
+*{
+    font-family: $arial;
+    font-size: $text;
+}
+
+
+.header-tasks{
+    position:relative;
+    h1{
+        font-family: $arial;
+        font-size: $text;
+        text-align: center;
+    }
+    svg{
+        margin-right: 10px;
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        transform: translateY(-25%);
+    }
+}
+
+.header-tasks{
+    padding: 30px;
+    width: 100vw;
+    position: fixed;
+    z-index: 5;
+    background-color: white;
+    text-align: center;
+}
+
+
+.main-tasks{
+    .select{
+        position: fixed;
+        width:100%;
+        z-index:3;
+        top:74px;
+    }
+    .field{
+        background: $black;
+        color: $white;
+        width: 100%;
+        padding: 15px 30px;
+        position: relative;
+    
+        .select .field:first-child{
+            border-bottom: 2px $white solid!important;
+        }
+
+        label{
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            color: $white;
+            z-index: 2;
+        }
+
+        select, option{
+            background: $black;
+            color: $white;
+            width: 100%;
+            text-align: center;
+            text-align-last: center;
+            border: none;
+
+            &:focus{
+                outline: none;
+            }
+        }
+    }
+}
+
+
+.tasks-list{
+    padding-top:170px;
+    padding-bottom:44px;
+}
+
+.task{
+    padding: 30px;
+    border-bottom: 1px solid $black!important;
+
+    h2{
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    .spec{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .more-info{
+        line-height: 17px;
+        p{
+            display:inline;
+        }
+        span{
+            font-weight: 700;
+            margin-right:5px;
+        }
+        margin: 10px 0 0 0;
+        button{
+            border: 0;
+            padding: 5px 30px;
+            color: $white;
+            font-weight: 700;
+        }
+    }
+    
+}
+
+button[data-id="1"]{
+    background: $red;
+}
+
+button[data-id="2"]{
+    background: $orange;
+}
+
+button[data-id="3"]{
+    background: $green;
+}
+
+
+.title{
+    display: flex;
+    p{
+        padding-left: 10px;
+    }
+}
+
+
+.add-task{
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    background: $black;
+    color: $white;
+    .closed-window{
+        display: flex;
+        justify-content: space-between;
+        margin: 15px 30px;
+        p{
+            text-transform: uppercase;
+            font-size: $text;
+        }
+    }
+}
+
+
+.modal-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $white;
+    border: 1px solid $black;
+    padding: 15px 30px;
+    display: none;
+    div{
+        display: flex;
+        justify-content: space-between;
+        padding:10px 0;
+    }
+    input{
+        background: $black;
+        color: $white;
+        border: 0;
+        padding: 5px 30px;
+        &:first-child{
+            margin-right:5px;
+        }
+    }
+}
+
+//premiere ligne du form pour ajouter une tâche
+.opened-window-lines{
+
+    display:flex;
+    
+    input, textarea, select{
+        border:0;
+        height:30px;
+        padding: 5px 15px;
+        flex-basis:50%;
+        &::placeholder{
+            color:$black;
+            font-size:$text;
+        }
+        border-bottom:1px solid $black;
+        border-right:1px solid $black;
+    }
+
+    input[type="date"]{
+        -webkit-appearance: none;
+        appearance:none;
+    }
+
+    textarea{
+        border-right:1px solid $black;
+        resize: none;
+        flex-basis:50%;
+    }
+
+    div{
+        flex-basis:50%;
+        display: flex;
+        flex-wrap:wrap;
+        flex-direction:column;
+    }
+}
+
+.opened-window{
+    background: $white;
+    display: none;
+}
+
+.send{
+    input{
+        width: 100%;
+        background: $black;
+        color: $white;
+        border:0;
+        text-transform: uppercase;
+        padding:5px 0;
+        text-align: center;
+    }
+}
