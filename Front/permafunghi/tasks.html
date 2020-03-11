@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr" id="html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/e1468f8121.js" crossorigin="anonymous"></script>
+    <!-- style -->
+    <link rel="stylesheet" href="css/style.min.css">
+</head>
+<body>
+    <header class="header-tasks">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15.415" height="29.414" viewBox="0 0 15.415 29.414">
+            <g id="Composant_1_1" data-name="Composant 1 – 1" transform="translate(0.707 0.707)">
+                <path id="Union_1" data-name="Union 1" d="M-1535,6l14,14Zm14-14-14,14Z" transform="translate(1535 8)" fill="none" stroke="#707070" stroke-width="2"/>
+            </g>
+        </svg>
+        <h1>to do</h1>
+    </header>
+    <main class="main-tasks">
+        <section class="select">
+            <div class="field">
+                <label for="city">city</label>
+                <select name="city" id="city">
+                    <option value="">charleroi</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="">status</label>
+                <select name="status" id="status">
+                    <option value="available">available</option>
+                    <option value="available">in progress</option>
+                    <option value="available">done</option>
+                </select>
+            </div>
+        </section>
+        <!-- get data -->
+        <section class="tasks-list"></section>
+        <!-- -------- -->
+        <section class="add-task">
+            <div class="closed-window">
+                <p>Add a task</p>
+                <i class="fas fa-plus"></i>
+            </div>
+            <div class="opened-window">
+                <form action="">
+                    <div class="opened-window-lines">
+                        <input type="text" placeholder="task:">
+                        <input type="date" id="date" name="trip-start" id="date" min="2020-03-10" max="2030-12-31">
+                    </div>
+    
+                    <div class="opened-window-lines">
+                        <div>
+                            <textarea id="description" placeholder="description:"></textarea>
+                            <input type="text" placeholder="city:">
+                        </div>
+                        <div>
+                            <select name="category" placeholder="category" id="category">
+                                <option value="technique">technique</option>
+                            </select>
+                            <select name="priority" id="priority">
+                                <option value="high">high</option>
+                                <option value="medium">medium</option>
+                                <option value="low">low</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="send">
+                        <input type="submit" value="send">
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section class="modal-window">
+            <p></p>
+            <div>
+                <input type="submit" value="yes">
+                <input type="submit" value="no">
+            </div>
+        </section>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
